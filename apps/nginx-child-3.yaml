@@ -1,0 +1,23 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-child-3
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/astha-proj/argocd-helm-lab.git
+    targetRevision: main
+    path: nginx-chart
+    helm:
+      releaseName: nginx-child-3
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nginx-child-3
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
